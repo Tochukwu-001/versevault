@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaRegUser } from "react-icons/fa6";
+import { RiMenu3Line } from "react-icons/ri";
 
 const Navbar = () => {
   const navItems = [
@@ -47,7 +48,7 @@ const Navbar = () => {
       </Link>
 
       <button>
-        
+        <RiMenu3Line/>
       </button>
     </nav>
   );
