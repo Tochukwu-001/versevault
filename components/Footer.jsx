@@ -18,7 +18,7 @@ const Footer = () => {
         <p className="text-lg text-gray-800 max-md:hidden">VerseVault</p>
       </Link>
 
-      <div className="text-sm space-x-5">
+      <div className="text-sm md:space-x-5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-2">
         <Link href={"#"}>Our Blogs</Link>
         <Link href={"#"}>Chat with us</Link>
         <Link href={"#"}>Contact Us</Link>
