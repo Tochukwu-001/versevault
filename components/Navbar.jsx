@@ -6,12 +6,23 @@ import { FaRegUser } from "react-icons/fa6";
 import { RiMenu3Line } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   console.log(session);
-  
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const navItems = [
     { label: "Home", url: "/" },
     { label: "About Us", url: "/about" },
@@ -62,17 +73,46 @@ const Navbar = () => {
         ))}
       </div>
 
-      <Link
-        href={"/auth/signin"}
-        className="flex items-center gap-1 text-lg hover:text-purple-600 transition-all duration-150 max-lg:ml-auto z-40"
-      >
-        <p className="max-md:hidden">Sign In</p>
-        <FaRegUser />
-      </Link>
+      {session ? (
+        <div>
+          <button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <img src={session?.user?.image} alt={session?.user?.name} />
+          </button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            slotProps={{
+              list: {
+                "aria-labelledby": "basic-button",
+              },
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
+      ) : (
+        <Link
+          href={"/auth/signin"}
+          className="flex items-center gap-1 text-lg hover:text-purple-600 transition-all duration-150 max-lg:ml-auto z-40"
+        >
+          <p className="max-md:hidden">Sign In</p>
+          <FaRegUser />
+        </Link>
+      )}
 
       <button
         onClick={() => setNavOpen(!navOpen)}
-        className="lg:hidden text-2xl ml-2 z-40"
+        className="lg:hidden text-2xl ml-4 z-40"
       >
         {navOpen ? <IoCloseOutline /> : <RiMenu3Line />}
       </button>
