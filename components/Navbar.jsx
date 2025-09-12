@@ -8,6 +8,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -82,7 +83,10 @@ const Navbar = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <img src={session?.user?.image} alt={session?.user?.name} />
+            <img
+              src={session?.user?.image}
+              alt={session?.user?.name.slice(0, 2).toUpperCase()}
+            />
           </button>
           <Menu
             id="basic-menu"
@@ -95,9 +99,15 @@ const Navbar = () => {
               },
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href={"/profile"}>My Profile</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href={"/new-post"}>New Post</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <button onClick={() => signOut()}>Sign Out</button>
+            </MenuItem>
           </Menu>
         </div>
       ) : (
