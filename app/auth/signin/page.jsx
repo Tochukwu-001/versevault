@@ -1,8 +1,12 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaGithub } from "react-icons/fa";
+import { auth, signIn } from "@/auth";
 
-const page = () => {
+const page = async () => {
+  const session = await auth()
+  console.log(session);
+  
   return (
     <main className="h-dvh flex items-center justify-center">
       <div className="shadow-md p-3 rounded-md space-y-5 md:w-xl w-full">
@@ -10,10 +14,21 @@ const page = () => {
           Sign in to your Account
         </h1>
 
-        <button className="border flex items-center justify-center gap-3 border-gray-300 py-3 rounded-full w-full">
-          <FcGoogle className="text-2xl" />
-          <p>Continue with Google</p>
-        </button>
+        <form
+          action={async () => {
+            "use server";
+            await signIn("google");
+          }}
+        >
+          <button
+            type="submit"
+            className="border flex items-center justify-center gap-3 border-gray-300 py-3 rounded-full w-full"
+          >
+            <FcGoogle className="text-2xl" />
+            <p>Continue with Google</p>
+          </button>
+        </form>
+
         <button className="border flex items-center justify-center gap-3 border-gray-300 py-3 rounded-full w-full">
           <FaGithub className="text-2xl" />
           <p>Continue with Github</p>

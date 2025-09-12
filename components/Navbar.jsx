@@ -5,10 +5,13 @@ import React, { useState } from "react";
 import { FaRegUser } from "react-icons/fa6";
 import { RiMenu3Line } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
-
+  const {data: session} = useSession();
+  console.log(session);
+  
   const navItems = [
     { label: "Home", url: "/" },
     { label: "About Us", url: "/about" },
@@ -60,7 +63,7 @@ const Navbar = () => {
       </div>
 
       <Link
-        href={"#"}
+        href={"/auth/signin"}
         className="flex items-center gap-1 text-lg hover:text-purple-600 transition-all duration-150 max-lg:ml-auto z-40"
       >
         <p className="max-md:hidden">Sign In</p>
