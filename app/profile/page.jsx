@@ -4,11 +4,11 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 
 const page = async () => {
-    const session = await auth()
+  const session = await auth()
 
-    if (!session) {
-        redirect("/auth/signin")
-    }
+  if (!session) {
+    redirect("/auth/signin")
+  }
 
   return (
     <main className='min-h-dvh'>
