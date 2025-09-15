@@ -59,9 +59,8 @@ const Navbar = () => {
 
       {/* mobile and tab view */}
       <div
-        className={`lg:hidden bg-white h-dvh w-full top-0 left-0 absolute flex flex-col items-center gap-10 pt-20 ${
-          navOpen ? "opacity-100" : "opacity-0"
-        }`}
+        className={`lg:hidden bg-white h-dvh w-full top-0 left-0 absolute flex flex-col items-center gap-10 pt-20 ${navOpen ? "opacity-100" : "opacity-0"
+          }`}
       >
         {navItems.map((item, index) => (
           <Link
@@ -75,7 +74,7 @@ const Navbar = () => {
       </div>
 
       {session ? (
-        <div>
+        <div className="ml-auto lg:ml-0">
           <button
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
@@ -86,6 +85,7 @@ const Navbar = () => {
             <img
               src={session?.user?.image}
               alt={session?.user?.name.slice(0, 2).toUpperCase()}
+              className="w-10 h-10 rounded-full"
             />
           </button>
           <Menu
