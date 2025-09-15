@@ -1,9 +1,17 @@
+"use server"
 import React from 'react'
+import NewPostForm from './post'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
 
-const page = () => {
+const page = async () => {
+  const session = await auth()
+  if (!session) {
+    redirect("/auth/signin")
+  }
   return (
     <main>
-      post poem
+      <NewPostForm session={session}/>
     </main>
   )
 }
