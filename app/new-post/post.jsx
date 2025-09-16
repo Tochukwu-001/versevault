@@ -2,9 +2,11 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '@/config/firebaseConfig';
 
 
-const NewPostForm = () => {
+const NewPostForm = ({ session }) => {
     const iv = {
         title: "",
         poem: ""
@@ -16,7 +18,22 @@ const NewPostForm = () => {
     })
 
     const handleSubmit = async (values) => {
-        console.log(values);
+        try {
+            // create an object that goes to the db
+            const poemDetails = {
+                author: session.user.name,
+                img: session.user.image,
+                timestamp: new Date().toLocaleDateString(),
+                ...values
+            }
+            console.log(poemDetails);
+            const docRef = await addDoc(collection(db, "verses"), poemDetails)
+            console.log("Document written with ID: ", docRef.id);
+            alert("Post Sucessful")
+        } catch (error) {
+            console.error("Error adding document", error)
+            alert("Oops, an error occurred. Try again later!")
+        }
     }
 
     return (
@@ -34,7 +51,8 @@ const NewPostForm = () => {
                             </div>
                             <div className='flex flex-col gap-2'>
                                 <label htmlFor="" className='text-sm text-gray-800'>Share your Poem</label>
-                                <Field as="textarea" name="poem" className="outline-none border rounded-md border-gray-200 p-2" />
+                                <Field as="textarea" name="poem"
+                                    className="outline-none border rounded-md border-gray-200 p-2" />
                                 <ErrorMessage name='poem' component={"p"} className='text-xs text-red-600' />
                             </div>
 
