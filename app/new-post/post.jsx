@@ -26,6 +26,8 @@ const NewPostForm = ({ session }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [processing, setProcessing] = useState(false);
+
     const iv = {
         title: "",
         poem: ""
@@ -36,8 +38,9 @@ const NewPostForm = ({ session }) => {
         poem: Yup.string().required("This is a required field").min(15, "Minimum of 15 characters required")
     })
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, {resetForm}) => {
         try {
+            setProcessing(true)
             // create an object that goes to the db
             const poemDetails = {
                 author: session.user.name,
@@ -52,6 +55,8 @@ const NewPostForm = ({ session }) => {
         } catch (error) {
             console.error("Error adding document", error)
             alert("Oops, an error occurred. Try again later!")
+        } finally{
+            setProcessing(false)
         }
     }
 
