@@ -7,6 +7,7 @@ import { db } from '@/config/firebaseConfig';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { BiLoaderCircle } from "react-icons/bi";
 
 const style = {
     position: 'absolute',
@@ -38,7 +39,7 @@ const NewPostForm = ({ session }) => {
         poem: Yup.string().required("This is a required field").min(15, "Minimum of 15 characters required")
     })
 
-    const handleSubmit = async (values, {resetForm}) => {
+    const handleSubmit = async (values, { resetForm }) => {
         try {
             setProcessing(true)
             // create an object that goes to the db
@@ -51,11 +52,12 @@ const NewPostForm = ({ session }) => {
             console.log(poemDetails);
             const docRef = await addDoc(collection(db, "verses"), poemDetails)
             console.log("Document written with ID: ", docRef.id);
+            resetForm()
             handleOpen()
         } catch (error) {
             console.error("Error adding document", error)
             alert("Oops, an error occurred. Try again later!")
-        } finally{
+        } finally {
             setProcessing(false)
         }
     }
@@ -80,7 +82,11 @@ const NewPostForm = ({ session }) => {
                                 <ErrorMessage name='poem' component={"p"} className='text-xs text-red-600' />
                             </div>
 
-                            <button type='submit' className='bg-purple-600 text-white w-full rounded-md p-2 hover:bg-purple-700 transition-all duration-200'>Post Your Poem</button>
+                            <button type='submit' className='bg-purple-600 text-white w-full rounded-md p-2 hover:bg-purple-700 transition-all duration-200'>
+                                {
+                                    processing ? <BiLoaderCircle className='animate-spin text-2xl text-white text-center' /> : "Post your Poem"
+                                }
+                            </button>
                         </Form>
                     </Formik>
                 </div>
