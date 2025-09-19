@@ -1,12 +1,31 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '@/config/firebaseConfig';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #D3D3D3',
+    boxShadow: 24,
+    p: 4,
+};
 
 
 const NewPostForm = ({ session }) => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const iv = {
         title: "",
         poem: ""
