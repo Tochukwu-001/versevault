@@ -27,8 +27,8 @@ const Navbar = () => {
   const navItems = [
     { label: "Home", url: "/" },
     { label: "About Us", url: "/about" },
-    { label: "Contact Us", url: "/contact" },
     { label: "FAQs", url: "/faqs" },
+    { label: "Explore", url: "/explore" },
   ];
 
   return (
@@ -64,6 +64,7 @@ const Navbar = () => {
       >
         {navItems.map((item, index) => (
           <Link
+            onClick={() => setNavOpen(false)}
             key={index}
             href={item.url}
             className="text-gray-800 hover:text-purple-600 transition-all duration-150 text-lg"

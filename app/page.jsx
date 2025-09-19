@@ -21,13 +21,13 @@ export default function Home() {
 
             <div className="flex items-center gap-5 max-md:flex-col max-md:w-full">
               <Link
-                href={"/"}
+                href={"/explore"}
                 className="border border-gray-400 rounded-lg px-8 py-3 text-xl hover:bg-gray-50/10 transition-all duration-200 max-md:w-full text-center"
               >
                 Behind the Vault
               </Link>
               <Link
-                href={"/"}
+                href={"/new-post"}
                 className="text-xl px-8 py-3 rounded-lg bg-purple-600 hover:bg-purple-700 transition-all duration-200 max-md:w-full text-center"
               >
                 Start Creating

@@ -21,8 +21,8 @@ const Footer = () => {
       <div className="text-sm md:space-x-5 max-md:flex max-md:flex-col max-md:items-center max-md:gap-2">
         <Link href={"#"}>Our Blogs</Link>
         <Link href={"#"}>Chat with us</Link>
-        <Link href={"#"}>Contact Us</Link>
-        <Link href={"#"}>About Us</Link>
+        <Link href={"/contact"}>Contact Us</Link>
+        <Link href={"/about"}>About Us</Link>
       </div>
 
       <div className="flex items-center gap-5 text-xl">

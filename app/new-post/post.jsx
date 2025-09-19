@@ -82,7 +82,7 @@ const NewPostForm = ({ session }) => {
                                 <ErrorMessage name='poem' component={"p"} className='text-xs text-red-600' />
                             </div>
 
-                            <button type='submit' className='bg-purple-600 text-white w-full rounded-md p-2 hover:bg-purple-700 transition-all duration-200'>
+                            <button type='submit' className='bg-purple-600 text-white w-full rounded-md p-2 hover:bg-purple-700 transition-all duration-200 flex items-center justify-center'>
                                 {
                                     processing ? <BiLoaderCircle className='animate-spin text-2xl text-white text-center' /> : "Post your Poem"
                                 }
