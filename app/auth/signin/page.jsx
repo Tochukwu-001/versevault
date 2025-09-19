@@ -2,10 +2,15 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaGithub } from "react-icons/fa";
 import { auth, signIn } from "@/auth";
+import { redirect } from "next/navigation";
 
 const page = async () => {
   const session = await auth()
   console.log(session);
+
+  if (session) {
+    redirect("/new-post")
+  }
   
   return (
     <main className="h-dvh flex items-center justify-center">
