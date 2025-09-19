@@ -48,7 +48,7 @@ const NewPostForm = ({ session }) => {
             console.log(poemDetails);
             const docRef = await addDoc(collection(db, "verses"), poemDetails)
             console.log("Document written with ID: ", docRef.id);
-            alert("Post Sucessful")
+            handleOpen()
         } catch (error) {
             console.error("Error adding document", error)
             alert("Oops, an error occurred. Try again later!")
@@ -80,6 +80,22 @@ const NewPostForm = ({ session }) => {
                     </Formik>
                 </div>
             </div>
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Post Sucessful
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Thank you for sharing your thoughts with the community.
+                    </Typography>
+                </Box>
+            </Modal>
         </main>
     )
 }
