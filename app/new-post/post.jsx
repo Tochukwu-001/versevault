@@ -47,6 +47,7 @@ const NewPostForm = ({ session }) => {
                 author: session.user.name,
                 img: session.user.image,
                 timestamp: new Date().toLocaleDateString(),
+                authorId: session?.user?.id,
                 ...values
             }
             console.log(poemDetails);

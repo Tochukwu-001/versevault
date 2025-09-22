@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '@/config/firebaseConfig';
 import Link from 'next/link';
+import { BiLoaderCircle } from "react-icons/bi";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 
 const Explore = () => {
     const [poems, setPoems] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     const fetchPoems = async () => {
         const poemArray = []
@@ -22,6 +25,7 @@ const Explore = () => {
         });
 
         setPoems(poemArray)
+        setLoading(false)
         // console.log(poems);
 
     }
@@ -34,38 +38,46 @@ const Explore = () => {
                 Explore our catalogue of wonderfully crafted Poems and interact with our Renowned authors.
             </h1>
 
-            <section className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                {
-                    poems.map((poem, i) => (
-                        <div key={i} className='shadow-md p-3 rounded-md flex flex-col justify-between'>
-                            <div className='flex items-center justify-between'>
-                                <img src={poem.img} alt={poem.author} className='rounded-full h-8 w-8' />
-                                <p>{poem.author}</p>
-                            </div>
+            {
+                loading ? <div className='h-[80vh] flex items-center justify-center'><BiLoaderCircle className='text-4xl animate-spin' /></div> :
+                    <section className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
+                        {
+                            poems.map((poem, i) => (
+                                <div key={i} className='shadow-md p-3 rounded-md flex flex-col justify-between'>
+                                    <div className='flex items-center justify-between'>
+                                        <div className='flex items-center gap-2'>
+                                            <img src={poem.img} alt={poem.author} className='rounded-full h-8 w-8' />
+                                            <p>{poem.author}</p>
+                                        </div>
 
-                            <div>
-                                <p className='font-semibold'>
-                                    Title: <span>{poem.title}</span>
-                                </p>
+                                        <button>
+                                            <FaRegTrashCan />
+                                        </button>
+                                    </div>
 
-                                <p className='line-clamp-2 text-sm mt-2'>
-                                    {poem.poem}
-                                </p>
-                            </div>
+                                    <div className='mt-3'>
+                                        <p className='font-semibold'>
+                                            Title: <span>{poem.title}</span>
+                                        </p>
 
-                            <div className='flex items-center justify-between mt-4'>
+                                        <p className='line-clamp-2 text-sm mt-2'>
+                                            {poem.poem}
+                                        </p>
+                                    </div>
 
-                                <p className='text-xs'>
-                                    Posted on <span>{poem.timestamp}</span>
-                                </p>
+                                    <div className='flex items-center justify-between mt-4'>
 
+                                        <p className='text-xs'>
+                                            Posted on <span>{poem.timestamp}</span>
+                                        </p>
+                                        <Link href={"#"} className='text-xs underline'>Read More</Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </section>
+            }
 
-                                <Link href={"#"} className='text-xs underline'>Read More</Link>
-                            </div>
-                        </div>
-                    ))
-                }
-            </section>
         </main>
     )
 }
