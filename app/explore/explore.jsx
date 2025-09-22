@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from '@/config/firebaseConfig';
 import Link from 'next/link';
 import { BiLoaderCircle } from "react-icons/bi";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 
-const Explore = () => {
+const Explore = ({ session }) => {
     const [poems, setPoems] = useState([]);
     const [loading, setLoading] = useState(true)
 
@@ -32,6 +32,10 @@ const Explore = () => {
 
     useEffect(() => { fetchPoems() }, [poems])
 
+    const handleDelete = async (id) => {
+        await deleteDoc(doc(db, "verses", id));
+    }
+
     return (
         <main className='min-h-dvh p-3'>
             <h1 className='text-center m-5 font-bold text-2xl text-gray-800 w-3/4 mx-auto'>
@@ -50,9 +54,12 @@ const Explore = () => {
                                             <p>{poem.author}</p>
                                         </div>
 
-                                        <button>
-                                            <FaRegTrashCan />
-                                        </button>
+                                        {
+                                            poem.authorId == session.user.id ?
+                                                <button onClick={() => handleDelete(poem.id)}>
+                                                    <FaRegTrashCan />
+                                                </button> : null
+                                        }
                                     </div>
 
                                     <div className='mt-3'>
@@ -70,7 +77,7 @@ const Explore = () => {
                                         <p className='text-xs'>
                                             Posted on <span>{poem.timestamp}</span>
                                         </p>
-                                        <Link href={"#"} className='text-xs underline'>Read More</Link>
+                                        <Link href={`/explore/${poem.id}`} className='text-xs underline'>Read More</Link>
                                     </div>
                                 </div>
                             ))
