@@ -85,7 +85,7 @@ const Navbar = () => {
           >
             <img
               src={session?.user?.image}
-              alt={session?.user?.name.slice(0, 2).toUpperCase()}
+              alt={session?.user?.name ? String(session.user.name).slice(0, 2).toUpperCase() : "User"}
               className="w-10 h-10 rounded-full"
             />
           </button>

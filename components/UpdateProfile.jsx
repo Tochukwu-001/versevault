@@ -4,7 +4,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from '@/config/firebaseConfig';
 
 const UpdateProfile = ({ session }) => {
-    const userName = session?.user.name
+    const userName = session?.user.name.name
     const uId = session?.user?.id
     const [name, setName] = useState(userName)
 

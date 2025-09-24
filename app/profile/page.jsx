@@ -6,6 +6,9 @@ import React from 'react'
 
 const page = async () => {
   const session = await auth()
+  console.log(session.user.name.name);
+  // ...because of the update function we wrote, session.user.name returns an object but session.user.name.name returns a string, thus fixing the error
+
 
   if (!session) {
     redirect("/auth/signin")
@@ -14,13 +17,13 @@ const page = async () => {
   return (
     <main className='min-h-dvh'>
       <div className='flex items-center justify-center flex-col gap-5 my-5'>
-       
-        <img src={session?.user?.image} alt={session?.user?.name.slice(0, 1).toUpperCase()} />
-        <h1>{session?.user?.name}</h1>
+
+        <img src={session?.user?.image || "/fb.png"} alt={session?.user?.name.name} />
+        <h1>{session?.user?.name?.name}</h1>
         <p>{session?.user?.email}</p>
       </div>
 
-      <UpdateProfile session={session}/>
+      <UpdateProfile session={session} />
     </main>
   )
 }
